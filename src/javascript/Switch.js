@@ -5,23 +5,23 @@ export class Switch {
 
     /**
      * Constructor for a new Switch.
-     * 
+     *
      * @param {Object} config The configuration information for the new Switch.
-     * 
+     *
      * @param {HTMLElement} config.element The HTMLElement object repesenting
      *  the checkbox to upgrade. Either this or config.selector MUST be
      *  specified.
-     * 
-     * @param {String} config.selector The CSS selector that specifies the 
-     *  checkbox to be upgraded. Either this or the config.element MUST be 
+     *
+     * @param {String} config.selector The CSS selector that specifies the
+     *  checkbox to be upgraded. Either this or the config.element MUST be
      *  specified.
-     * 
+     *
      * @param {Boolean} config.material Defaults to false. If true, will render
      *  the new Switch in a Material Design-inspired look.
-     * 
+     *
      * @param {Boolean} config.matchSizeToFont Defaults to false. If true, will
      *  attempt to figure out the impled font size for the Switch, and match
-     *  its size to that font size. 
+     *  its size to that font size.
      */
     constructor(config) {
         // set/get basic properties from config or defaults
@@ -39,6 +39,10 @@ export class Switch {
             this.isMaterial = true;
         }
 
+        if (this.element.disabled) {
+            this.disabled = true;
+        }
+
         // actually create the elements that make up the Switch
         this.setup();
     }
@@ -52,6 +56,9 @@ export class Switch {
 
         this.element.classList.add("_simple-switch-checkbox");
         this.track.classList.add("_simple-switch-track");
+        if (this.disabled) {
+            this.track.classList.add("disabled")
+        }
         this.handle.classList.add("handle");
 
         if(this.isMaterial) {
@@ -62,9 +69,9 @@ export class Switch {
             this.track.classList.add(Switch.CHECKED_CLASS_NAME);
         }
 
-        // The track itself, despite being a button, shouldn't be tabbed to. 
+        // The track itself, despite being a button, shouldn't be tabbed to.
         // Instead, when the original checkbox gains focus, the Javascript will
-        // update the track. This is so that screenreaders still read the 
+        // update the track. This is so that screenreaders still read the
         // Switch as a checkbox.
         this.track.setAttribute("tabindex", -1);
 
@@ -92,7 +99,7 @@ export class Switch {
     }
 
     /**
-     * Takes care of binding all relevant events from the checkbox so that the 
+     * Takes care of binding all relevant events from the checkbox so that the
      * Switch can update itself when those events happen.
      */
     bind() {
@@ -115,8 +122,8 @@ export class Switch {
 
     /**
      * Called automatically when the wrapped checkbox gains focus.
-     * 
-     * @param {FocusEvent} e The focus event object. 
+     *
+     * @param {FocusEvent} e The focus event object.
      */
     checkboxFocused(e) {
         this.track.classList.add(Switch.FOCUSED_CLASS_NAME);
@@ -124,7 +131,7 @@ export class Switch {
 
     /**
      * Called automatically when the wrapped checkbox loses focus.
-     * 
+     *
      * @param {BlurEvent} e The blur event object.
      */
     checkboxBlurred(e) {
@@ -133,7 +140,7 @@ export class Switch {
 
     /**
      * Called automatically when the Switch track is clicked.
-     * 
+     *
      * @param {ClickEvent} e The click event object.
      */
     trackClicked(e) {
@@ -142,7 +149,7 @@ export class Switch {
 
     /**
      * Called automatically when the wrapped checkbox is clicked.
-     * 
+     *
      * @param {ClickEvent} e The click event object.
      */
     checkboxToggled(e) {
@@ -150,7 +157,7 @@ export class Switch {
     }
 
     /**
-     * Toggles the state of the Switch. Also takes care of making sure the 
+     * Toggles the state of the Switch. Also takes care of making sure the
      * wrapped checkbox is also updated.
      */
     toggle() {

@@ -3,6 +3,7 @@ $simple-switch_focus-color: #03A9F4 !default;
 $simple-switch_focus-ring-size: 7px !default;
 $simple-switch_handle-color: #fff !default;
 $simple-switch_outline-size: 3px !default;
+$simple-switch_disable-color: lighten($simple-switch_color, 30%) !default;
 // this is just a default value/fallback for older browsers
 $simple-switch_size: 18px !default;
 $simple-switch_switch-speed: 250ms !default;
@@ -71,6 +72,12 @@ $simple-switch_tray-color: #ccc !default;
             height: calc(var(--simple-switch_size) - #{$simple-switch_outline-size * 2});
             border-radius: var(--simple-switch_size);
         }
+    }
+
+    &.disabled {
+        background-color: $simple-switch_disable-color;
+        border-color: $simple-switch_disable-color;
+        pointer-events: none;
     }
 
     // Material mode (makes the Switch match the material.io spec)
